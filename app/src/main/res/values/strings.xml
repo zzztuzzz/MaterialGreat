@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">tablayout3</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="first">top</string>
+    <string name="second">new</string>
+    <string name="third">active</string>
+    <string name="forth">near</string>
+</resources>
