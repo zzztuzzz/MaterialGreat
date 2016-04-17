@@ -1,5 +1,6 @@
 package com.example.teiyuueki.tablayout3;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -12,10 +13,23 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.teiyuueki.tablayout3.fragment.ListViewFragmentOne;
 import com.example.teiyuueki.tablayout3.fragment.ViewPagerAdapter;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    public static MainActivity instance;
+    private ViewPagerAdapter adapter;
+    private ListViewFragmentOne fragmentOne;
+    private ListViewFragmentOne fragmentTwo;
+    private ListViewFragmentOne fragmentThree;
+    private ListViewFragmentOne fragmentFour
+            ;
+//    private FragmentTwo fragmentTwo;
+
+    private ViewPager viewPager;
+    private TabLayout allTabs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +37,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -37,18 +49,25 @@ public class MainActivity extends AppCompatActivity
         assert navigationView != null;
         navigationView.setNavigationItemSelectedListener(this);
 
-
-
+        //mainActivity make instance to inflater gridview
+        instance = this;
 
         //add  viewpager
-        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
-        TabLayout mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
-        ViewPager mViewPager = (ViewPager) findViewById(R.id.viewPager);
+//        Toolbar mToolbar = (Toolbar) findViewById(R.id.toolbar);
+//        TabLayout mTabLayout = (TabLayout) findViewById(R.id.tabLayout);
+//        ViewPager mViewPager = (ViewPager) findViewById(R.id.viewPager);
+//
+//        setSupportActionBar(mToolbar);
+//        setupViewPager(mViewPager);
+//        mTabLayout.setupWithViewPager(mViewPager);
 
-        setSupportActionBar(mToolbar);
-        setupViewPager(mViewPager);
-        mTabLayout.setupWithViewPager(mViewPager);
+        //new viewpager by   easy-way-to-create-tab-layout-in-android-with-viewpager-master-1
+
+        getAllWidgets();
+        setupViewPager();
+
     }
+
 
     @Override
     public void onBackPressed() {
@@ -78,7 +97,6 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -106,12 +124,42 @@ public class MainActivity extends AppCompatActivity
         drawer.closeDrawer(GravityCompat.START);
         return true;
     }
-    public void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.add(getResources().getString(R.string.first), getResources().getColor(R.color.whiteee));
-        adapter.add(getResources().getString(R.string.second), getResources().getColor(R.color.whiteee));
-        adapter.add(getResources().getString(R.string.third), getResources().getColor(R.color.whiteee));
-        adapter.add(getResources().getString(R.string.forth), getResources().getColor(R.color.whiteee));
-        viewPager.setAdapter(adapter);
+
+//    public void setupViewPager(ViewPager viewPager) {
+//        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
+//        adapter.add(getResources().getString(R.string.first), getResources().getColor(R.color.whiteee));
+//        adapter.add(getResources().getString(R.string.second), getResources().getColor(R.color.whiteee));
+//        adapter.add(getResources().getString(R.string.third), getResources().getColor(R.color.whiteee));
+//        adapter.add(getResources().getString(R.string.forth), getResources().getColor(R.color.whiteee));
+//        viewPager.setAdapter(adapter);
+//    }
+
+    public static Context getInstance() {
+        return instance;
     }
+
+    public void getAllWidgets() {
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        allTabs = (TabLayout) findViewById(R.id.tabLayout);
+    }
+
+    private void setupViewPager() {
+        adapter = new ViewPagerAdapter(getSupportFragmentManager());
+        fragmentOne = new ListViewFragmentOne();
+        fragmentTwo = new ListViewFragmentOne();
+        fragmentThree = new ListViewFragmentOne();
+        fragmentFour = new ListViewFragmentOne();
+//        fragmentTwo = new FragmentTwo();
+        adapter.addFragment(fragmentOne, "Top");
+        adapter.addFragment(fragmentTwo, "New");
+        adapter.addFragment(fragmentThree, "Active");
+        adapter.addFragment(fragmentFour, "Near");
+        setViewPageAdapter();
+    }
+
+    private void setViewPageAdapter() {
+        viewPager.setAdapter(adapter);
+        allTabs.setupWithViewPager(viewPager);
+    }
+
 }
