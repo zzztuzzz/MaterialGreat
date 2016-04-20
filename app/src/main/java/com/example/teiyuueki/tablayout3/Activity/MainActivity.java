@@ -1,4 +1,4 @@
-package com.example.teiyuueki.tablayout3;
+package com.example.teiyuueki.tablayout3.Activity;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.example.teiyuueki.tablayout3.R;
 import com.example.teiyuueki.tablayout3.fragment.ListViewFragmentOne;
 import com.example.teiyuueki.tablayout3.fragment.ViewPagerAdapter;
 
